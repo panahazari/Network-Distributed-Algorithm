@@ -1,12 +1,5 @@
 #!/usr/bin/env python
 # coding=utf-8
-import sys
-import os
-
-current_path = os.path.dirname(os.path.abspath('logistic_regression.py'))
-root_path = os.path.join(current_path, '..', '..')
-sys.path.append(root_path)
-import nda
 
 import numpy as np
 import matplotlib.pyplot as plt
