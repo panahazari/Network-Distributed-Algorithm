@@ -22,7 +22,7 @@ if __name__ == '__main__':
     kappa = 100
     mu = 5e-8
 
-    n_iters = 10
+    n_iters = 1000
 
     p = LogisticRegression(n_agent=n_agent, m=m, dim=dim, noise_ratio=0.05, graph_type='er', kappa=kappa, graph_params=0.3)
     print(p.n_edges)
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     print('alpha = ' + str(alpha))
 
 
-    eta = 2/(p.L + p.sigma)
+    eta = 0.2/(p.L + p.sigma)
     n_inner_iters = int(m * 0.05)
     batch_size = int(m / 10)
     batch_size = 10
@@ -45,10 +45,10 @@ if __name__ == '__main__':
 
     single_machine = [
         GD(p, n_iters=n_iters, eta=eta, x_0=x_0_mean),
-        SGD(p, n_iters=n_dsgd_iters, eta=eta*3, batch_size=batch_size, x_0=x_0_mean, diminishing_step_size=True),
-        NAG(p, n_iters=n_iters, x_0=x_0_mean),
-        SVRG(p, n_iters=n_svrg_iters, n_inner_iters=n_inner_iters, eta=eta/20, x_0=x_0_mean),
-        SARAH(p, n_iters=n_svrg_iters, n_inner_iters=n_inner_iters, eta=eta/20, x_0=x_0_mean),
+        # SGD(p, n_iters=n_dsgd_iters, eta=eta*3, batch_size=batch_size, x_0=x_0_mean, diminishing_step_size=True),
+        # NAG(p, n_iters=n_iters, x_0=x_0_mean),
+        # SVRG(p, n_iters=n_svrg_iters, n_inner_iters=n_inner_iters, eta=eta/20, x_0=x_0_mean),
+        # SARAH(p, n_iters=n_svrg_iters, n_inner_iters=n_inner_iters, eta=eta/20, x_0=x_0_mean),
         ]
 
 
@@ -68,8 +68,8 @@ if __name__ == '__main__':
         NetworkDANE(p, n_iters=n_iters, mu=mu, x_0=x_0, W=W),
         ]
 
-    exps = single_machine + distributed + network
-
+    #exps = single_machine + distributed + network
+    exps = single_machine
     res = run_exp(exps, kappa=kappa, max_iter=n_iters, name='logistic_regression', n_cpu_processes=4, save=True)
 
 
